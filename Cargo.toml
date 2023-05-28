@@ -12,7 +12,8 @@ path = "src/lib.rs"
 path = "src/main.rs"
 name = "lift"
 
-
 [dependencies]
 actix-web = "4"
 
+[dev-dependencies]
+reqwest = "0.11"

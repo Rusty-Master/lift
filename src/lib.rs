@@ -1,18 +1,15 @@
-use actix_web::{get, post, App, HttpResponse, HttpServer, Responder};
+use std::net::TcpListener;
 
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
+use actix_web::{dev::Server, web, App, HttpResponse, HttpServer, Responder};
+
+async fn health_check() -> impl Responder {
+    HttpResponse::Ok()
 }
 
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
+pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
+    let server = HttpServer::new(|| App::new().route("/health_check", web::get().to(health_check)))
+        .listen(listener)?
+        .run();
 
-pub async fn run() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(hello).service(echo))
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
+    Ok(server)
 }
