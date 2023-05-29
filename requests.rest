@@ -1,2 +1,10 @@
 ### GET health_check
 GET http://127.0.0.1:8080/health_check HTTP/1.1
+
+### POST Route
+POST http://127.0.0.1:8080/v1/route/create HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+start_lat=1&start_lon=2&end_lat=3&end_lon=4
+
+
